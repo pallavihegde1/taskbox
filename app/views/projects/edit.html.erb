@@ -1,0 +1,39 @@
+<% provide(:title, "Edit Projects") %>
+<div class="form">
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<h3> edit project </h3>
+<%= form_for @project do |f| %>
+
+<% if @project.errors.any? %>
+<div class="errors" style="color:red" %>
+<ul>
+<% for msg in @project.errors.full_messages %>
+<li> <%=msg%> </li>
+<%end %>
+</ul>
+</div>
+<%end%>
+
+	<label> Client </label> <br/>
+<%= f.collection_select :client_id, Client.all, :id, :company, prompt: "select" %> <br/>
+<label> Name :</label> <br/>
+<%=f.text_field :name, required:true %> </br>
+<label> Description </label> <br/>
+<%= f.text_area :description %> <br/>
+<label> Start Date :</label> <br/>
+<%=f.date_select :start_date, order:[:day,:month,:year] %> <br/>
+<label> Status: </label> <br/>
+<%=f.radio_button :status,"open" %> Open
+<%=f.radio_button :status,"on-going" %> On-going
+<%=f.radio_button :status,"completed" %> Completed
+<br/>
+
+	<%=f.submit "Submit" ,class: 'btn btn-primary'%>
+	<%end%>
+	</div>
+	</div>
+	</div>
+	</div>
+	

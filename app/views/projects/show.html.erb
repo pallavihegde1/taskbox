@@ -1,0 +1,60 @@
+
+  <div class="jumbotron">
+  <h2><%= @project.try(:name) %>
+  <p> <%= @project.status %> | <%= @project.start_date.strftime("%A, %d %B %Y ") %> <br/>
+  <small>
+    <%= link_to "edit", edit_project_path(@project.id) %> | <%= link_to "destroy" ,project_path(@project.id), method: :delete,data: {
+      confirm: "Are you sure?"} %>
+    </small>
+
+    <% data=[] %>
+
+    <%for task in @project.tasks %>
+        <% data.push([task.name,@project.start_date.to_s,task.due_date.to_s]) %>
+
+    <%end %>
+
+    <%= timeline(data) %>
+  
+     <h3> Client : </h3><%= link_to @project.client.try(:name), client_path(@project.client) %> <br/>
+     <h3> Total Tasks :<%=@project.tasks.size %> </h3>
+     <%over_due_tasks =@project.tasks.where('is_completed =? AND due_date <?',false,Date.today) %>
+     <%incomplete_tasks =@project.tasks.where('is_completed =? AND due_date >=?',false,Date.today) %>
+     <%completed_tasks =@project.tasks.where('is_completed =?',true) %>
+
+      <h3> Overdue tasks </h3>
+      <ul>
+      <% for task in over_due_tasks %>
+      <li> <%=task.name %> 
+      <%= link_to "mark as complete", tasks_mark_as_complete_path(task_id: task.id) %> 
+      </li>
+      <%end%>
+      </ul>
+      <h3> Incomplete Tasks </h3>
+      <% for task in incomplete_tasks %>
+      <li> <%=task.name %> </li>
+      <%end%>
+      </ul>
+      <h3> Completed tasks </h3>
+      <% for task in completed_tasks %>
+      <li> <%=task.name %> </li>
+      <%= link_to "mark as incomplete", tasks_mark_as_incomplete_path(task_id: task.id) %>
+      <%end%>
+      </ul>
+
+
+
+      <h3> Add Task </h3>
+      <%=form_for @task do |f| %>
+      <%= f.text_field :name,placeholder:"task name" %> <br/>
+      <label> Due Date ? </label> <%=f.date_select :due_date %> <br/>
+      <label> Is completed ?</label> <%=f.check_box:is_completed %> <br/>
+      <%= f.hidden_field :project_id, value: @project.id %>
+      <%= f.submit %>
+      <%end%>
+      </div>
+
+       <%= link_to "show projects", projects_path,class: 'btn btn-info'%>
+    
+       </div>
+      </div>

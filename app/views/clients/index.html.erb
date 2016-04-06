@@ -1,0 +1,13 @@
+
+
+	<% provide(:title, "Listing Clients") %>
+	<div class="container-fluid">
+  <h3 class="text-center"> Listing clients </h3>
+  <%= link_to "Export to excel", clients_path(format:"xls") if current_user.is_admin? %>
+ <div class="text-center">
+	<strong> Total Clients = <%= @clients.size %> </strong>
+  </div>
+<%= render 'table' %>
+
+<%= link_to "Add client" , new_client_path,class:'btn btn-info'%>
+</div>

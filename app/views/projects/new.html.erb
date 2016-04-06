@@ -1,0 +1,26 @@
+
+<script>
+  $(function() {
+    $( "#datepicker" ).datepicker();
+  });
+  </script>
+<h3> Add project </h3>
+
+<%= form_for @project do |f| %>
+	<label> Client </label> <br/>
+<%= f.collection_select :client_id, Client.all, :id, :company, prompt: "select" %> <br/>
+<label> Name :</label> <br/>
+<%=f.text_field :name, required:true %> </br>
+<label> Description </label> <br/>
+<%= f.text_area :description %> <br/>
+<label> Start Date :</label> <br/>
+<%=f.text_field :start_date,id:'datepicker'%> <br/>
+<label> Status: </label> <br/>
+<%=f.radio_button :status,"open" %> Open
+<%=f.radio_button :status,"on-going" %> On-going
+<%=f.radio_button :status,"completed" %> Completed
+<br/>
+<%= f.submit %>
+
+
+<%end%>

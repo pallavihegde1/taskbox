@@ -1,0 +1,9 @@
+<h3> Add Task </h3>
+      <%=form_for @task do |f| %>
+      <%= f.text_field :name,placeholder:"task name" %> <br/>
+      <label> Due Date ? </label> <%=f.date_select :due_date %> <br/>
+      <label> Is completed ?</label> <%=f.check_box:is_completed %> <br/>
+      <%= f.hidden_field :project_id, value: @project.id %>
+      <%= f.submit %>
+      <%end%>
+      </div>

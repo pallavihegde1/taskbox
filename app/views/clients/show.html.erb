@@ -1,0 +1,39 @@
+
+  
+  <div class="jumbotron">
+  <h2><%= @client.name %>
+  <small>
+    <%= link_to "edit", edit_client_path(@client.id) %> | <%= link_to "destroy" ,client_path(@client.id), method: :delete,data: {
+    	confirm: "Are you sure?"} %> <br/>
+      <%= link_to "generate invoive" ,new_client_invoice_path(@client.id) %>
+    </small>
+   </h2>
+  <div class="row">
+  <div class="col-xs-6">
+   <%= @client.mobile %>| <%=@client.website %> | <%=@client.company %>
+
+    <% if @client.projects.empty? %>
+     <p> No projects found. Add your first project <%= link_to "here" %>
+     </p>
+    <% else %>
+      <h3>Project count =<%=@client.projects.size %> </h3>
+      <ul>
+      <% data ={} %>
+      <% for project in @client.projects %>
+      <li><%= project.name %> </li>
+      
+      <% end %>
+      </ul>
+
+
+      <%= column_chart(data) %>
+      <% end %>
+      <h3> Invoices sent </h3>
+      <ul>
+      <%for invoice in @client.invoices %>
+      <li> <%= invoice.details %> <%= link_to "edit", edit_client_invoice_path(@client.id,invoice.id) %> </li>
+      <% end %>
+       <%= link_to "show clients", clients_path,class: 'btn btn-success'%>
+      </div>
+       </div>
+      </div>

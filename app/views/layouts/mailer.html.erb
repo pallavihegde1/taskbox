@@ -1,0 +1,13 @@
+<html>
+  <body>
+    <%= yield %>
+
+    Hi <%="#{@task.project.client.name}" %> , <br/>
+     We would like to inform you that we have completed the task <b><%="#{@task.name}" %></b> belonging to the project <b><%="#{@task.project.name}" %> </b> which was due on <%=@task.due_date.strftime("%A %d %b %Y") %> has been completed <br/>
+
+regards ,
+team taskbox
+
+
+  </body>
+</html>
