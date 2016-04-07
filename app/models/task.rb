@@ -2,7 +2,7 @@ class Task < ActiveRecord::Base
 	belongs_to:project
 	belongs_to:user
 
-	valiates :name, presence: true
+	validates :name, presence: true
 	validate :check_due_date
 
 	private 
